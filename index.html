@@ -3,69 +3,540 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کافه کتاب</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <!-- فونت‌های جدید لاکچری -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>گوگی موگی - منوی کافی شاپ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Montserrat', 'Roboto', sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
+            background: linear-gradient(135deg, #6f4e37 0%, #3e2723 100%);
+            color: #fff;
             padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #d4a76a;
+        }
+        
+        .admin-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #d4a76a;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: 1px solid #d4a76a;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .admin-link:hover {
+            background: #d4a76a;
+            color: #3e2723;
+        }
+        
+        .category-filter {
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-            width: 100%;
-            overflow-x: hidden;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
         }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid #d4a76a;
+            color: #d4a76a;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: #d4a76a;
+            color: #3e2723;
+        }
+        
+        .category-section {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            color: #d4a76a;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d4a76a;
             display: flex;
-            flex-direction: column;
             align-items: center;
         }
-
-        h1, .product-name {
-            font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        
+        .category-title i {
+            margin-left: 10px;
         }
-
-        .category-tab {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            letter-spacing: 0.3px;
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
-
-        .product-description {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            line-height: 1.6;
+        
+        .menu-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
-
-        .info-section h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            font-size: 24px;
-            letter-spacing: 0.5px;
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
         }
-
-        /* بقیه استایل‌ها بدون تغییر باقی می‌مانند */
-        /* ... */
+        
+        .item-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d4a76a;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .description {
+            color: #ccc;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .category {
+            display: inline-block;
+            background: rgba(212, 167, 106, 0.2);
+            color: #d4a76a;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .contact-info {
+            margin-top: 10px;
+        }
+        
+        .no-image {
+            background: #5d4037;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 3rem;
+        }
+        
+        .no-items {
+            text-align: center;
+            color: #ccc;
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .category-title {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- محتوای HTML بدون تغییر باقی می‌ماند -->
-    <!-- ... -->
+    <div class="container">
+        <header>
+            <h1>منوی کافی شاپ گوگی موگی</h1>
+            <p>لذت یک قهوه فوق العاده در فضایی دنج و آرام</p>
+            <a href="gogimogia.html" class="admin-link">ورود به بخش مدیریت</a>
+        </header>
+        
+        <div class="category-filter" id="category-filter">
+            <!-- دسته‌بندی‌ها به صورت پویا لود می‌شوند -->
+        </div>
+        
+        <div id="menu-container">
+            <!-- منو از طریق JavaScript لود خواهد شد -->
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 گوگی موگی | تمام حقوق محفوظ است</p>
+        <div class="contact-info">
+            <p>تلفن: ۱۲۳ ۴۵۶ ۷۸۹+ | آدرس: www.reallygreatsite.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // بارگذاری منو از localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMenuItems();
+            loadCategories();
+            setupFilterButtons();
+            
+            // گوش دادن به تغییرات در localStorage
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'gogimogi-menu' || e.key === 'gogimogi-categories') {
+                    loadCategories();
+                    loadMenuItems();
+                    setupFilterButtons();
+                }
+            });
+        });
+        
+        function loadCategories() {
+            const categoryFilter = document.getElementById('category-filter');
+            
+            // دریافت دسته‌بندی‌ها از localStorage
+            let categories = JSON.parse(localStorage.getItem('gogimogi-categories'));
+            
+            // اگر دسته‌بندی‌ها وجود ندارند، از منوی پیش‌فرض استفاده کن
+            if (!categories || categories.length === 0) {
+                categories = ["قهوه داغ", "قهوه سرد", "نوشیدنی ویژه"];
+                localStorage.setItem('gogimogi-categories', JSON.stringify(categories));
+            }
+            
+            // پاک کردن فیلترهای موجود
+            categoryFilter.innerHTML = '';
+            
+            // افزودن دکمه "همه"
+            const allButton = document.createElement('button');
+            allButton.className = 'category-btn active';
+            allButton.dataset.category = 'all';
+            allButton.textContent = 'همه';
+            categoryFilter.appendChild(allButton);
+            
+            // افزودن دکمه‌های دسته‌بندی
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'category-btn';
+                button.dataset.category = category;
+                button.textContent = category;
+                categoryFilter.appendChild(button);
+            });
+            
+            // افزودن دکمه "متفرقه"
+            const miscButton = document.createElement('button');
+            miscButton.className = 'category-btn';
+            miscButton.dataset.category = 'متفرقه';
+            miscButton.textContent = 'متفرقه';
+            categoryFilter.appendChild(miscButton);
+        }
+        
+        function loadMenuItems() {
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.innerHTML = '';
+            
+            // دریافت منو از localStorage یا استفاده از منوی پیش‌فرض
+            let menuItems = JSON.parse(localStorage.getItem('gogimogi-menu')) || getDefaultMenu();
+            
+            if (menuItems.length === 0) {
+                menuContainer.innerHTML = '<p class="no-items">هیچ آیتمی در منو وجود ندارد.</p>';
+                return;
+            }
+            
+            // دریافت دسته‌بندی‌ها
+            let categories = JSON.parse(localStorage.getItem('gogimogi-categories')) || ["قهوه داغ", "قهوه سرد", "نوشیدنی ویژه"];
+            
+            // گروه‌بندی آیتم‌ها بر اساس دسته‌بندی
+            const categorizedItems = {};
+            const miscItems = [];
+            
+            // ایجاد گروه برای هر دسته‌بندی
+            categories.forEach(category => {
+                categorizedItems[category] = [];
+            });
+            
+            // افزودن آیتم‌ها به دسته‌بندی مربوطه
+            menuItems.forEach(item => {
+                if (categories.includes(item.category)) {
+                    if (!categorizedItems[item.category]) {
+                        categorizedItems[item.category] = [];
+                    }
+                    categorizedItems[item.category].push(item);
+                } else {
+                    miscItems.push(item);
+                }
+            });
+            
+            // ایجاد بخش برای هر دسته‌بندی
+            categories.forEach(category => {
+                if (categorizedItems[category] && categorizedItems[category].length > 0) {
+                    const categorySection = document.createElement('div');
+                    categorySection.className = 'category-section';
+                    categorySection.id = `category-${category.replace(/\s+/g, '-')}`;
+                    
+                    const categoryTitle = document.createElement('h2');
+                    categoryTitle.className = 'category-title';
+                    
+                    // انتخاب آیکون بر اساس نوع دسته‌بندی
+                    let iconClass = 'fas fa-coffee';
+                    if (category.includes('سرد')) iconClass = 'fas fa-snowflake';
+                    if (category.includes('ویژه')) iconClass = 'fas fa-star';
+                    
+                    categoryTitle.innerHTML = `<i class="${iconClass}"></i> ${category}`;
+                    
+                    const menuGrid = document.createElement('div');
+                    menuGrid.className = 'menu';
+                    
+                    categorizedItems[category].forEach(item => {
+                        const menuItem = createMenuItem(item);
+                        menuGrid.appendChild(menuItem);
+                    });
+                    
+                    categorySection.appendChild(categoryTitle);
+                    categorySection.appendChild(menuGrid);
+                    menuContainer.appendChild(categorySection);
+                }
+            });
+            
+            // ایجاد بخش متفرقه برای آیتم‌های بدون دسته‌بندی
+            if (miscItems.length > 0) {
+                const miscSection = document.createElement('div');
+                miscSection.className = 'category-section';
+                miscSection.id = 'category-misc';
+                
+                const miscTitle = document.createElement('h2');
+                miscTitle.className = 'category-title';
+                miscTitle.innerHTML = '<i class="fas fa-question-circle"></i> متفرقه';
+                
+                const menuGrid = document.createElement('div');
+                menuGrid.className = 'menu';
+                
+                miscItems.forEach(item => {
+                    const menuItem = createMenuItem(item);
+                    menuGrid.appendChild(menuItem);
+                });
+                
+                miscSection.appendChild(miscTitle);
+                miscSection.appendChild(menuGrid);
+                menuContainer.appendChild(miscSection);
+            }
+        }
+        
+        function createMenuItem(item) {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'menu-item';
+            menuItem.dataset.category = item.category || 'متفرقه';
+            
+            let imageHtml = '';
+            if (item.image) {
+                imageHtml = `<img src="${item.image}" class="item-image" alt="${item.name}">`;
+            } else {
+                imageHtml = `<div class="item-image no-image"><i class="fas fa-coffee"></i></div>`;
+            }
+            
+            menuItem.innerHTML = `
+                ${imageHtml}
+                <div class="price">${item.price} تومان</div>
+                <h3 class="title">${item.name}</h3>
+                <p class="description">${item.description}</p>
+                <span class="category">${item.category || 'متفرقه'}</span>
+            `;
+            
+            return menuItem;
+        }
+        
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.category-btn');
+            
+            filterButtons.forEach(button => {
+                // حذف event listenerهای قبلی
+                button.replaceWith(button.cloneNode(true));
+            });
+            
+            // گرفتن مجدد reference به دکمه‌ها
+            const newFilterButtons = document.querySelectorAll('.category-btn');
+            
+            newFilterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // حذف کلاس active از همه دکمه‌ها
+                    newFilterButtons.forEach(btn => btn.classList.remove('active'));
+                    // اضافه کردن کلاس active به دکمه کلیک شده
+                    this.classList.add('active');
+                    
+                    const category = this.dataset.category;
+                    filterMenuItems(category);
+                });
+            });
+        }
+        
+        function filterMenuItems(category) {
+            const categorySections = document.querySelectorAll('.category-section');
+            
+            if (category === 'all') {
+                // نمایش همه بخش‌ها
+                categorySections.forEach(section => {
+                    section.style.display = 'block';
+                });
+            } else if (category === 'متفرقه') {
+                // مخفی کردن همه بخش‌ها
+                categorySections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // نمایش بخش متفرقه
+                const miscSection = document.getElementById('category-misc');
+                if (miscSection) {
+                    miscSection.style.display = 'block';
+                }
+            } else {
+                // مخفی کردن همه بخش‌ها
+                categorySections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // نمایش بخش مربوط به دسته‌بندی انتخاب شده
+                const selectedSection = document.getElementById(`category-${category.replace(/\s+/g, '-')}`);
+                if (selectedSection) {
+                    selectedSection.style.display = 'block';
+                }
+            }
+        }
+        
+        function getDefaultMenu() {
+            return [
+                {
+                    name: "BLACK COFFEE",
+                    price: "۲۵,۰۰۰",
+                    description: "یک فنجان قهوه سیاه کلاسیک و قوی که از دانه های قهوه تازه آسیاب شده تهیه شده است.",
+                    category: "قهوه داغ",
+                    image: ""
+                },
+                {
+                    name: "LATTE",
+                    price: "۴۵,۰۰۰",
+                    description: "اسپرسو ترکیب شده با شیر بخارپز و روی آن با مقدار کمی کف شیر تزئین شده است.",
+                    category: "قهوه داغ",
+                    image: ""
+                },
+                {
+                    name: "CAPPUCCINO",
+                    price: "۴۲,۰۰۰",
+                    description: "مقادیر مساوی اسپرسو, شیر بخارپز و کف شیر برای بافتی غنی و کف آلود.",
+                    category: "قهوه داغ",
+                    image: ""
+                },
+                {
+                    name: "AMERICANO",
+                    price: "۳۰,۰۰۰",
+                    description: "آب داغ اضافه شده به یک شات اسپرسو برای یک قهوه سبک تر اما جسورانه.",
+                    category: "قهوه داغ",
+                    image: ""
+                },
+                {
+                    name: "ESPRESSO",
+                    price: "۲۰,۰۰۰",
+                    description: "یک شات غلیظ از قهوه سیاه قوی که با عبور آب داغ از دانه های قهوه آسیاب شده ریز تهیه می شود.",
+                    category: "قهوه داغ",
+                    image: ""
+                },
+                {
+                    name: "MOCHA",
+                    price: "۵۰,۰۰۰",
+                    description: "اسپرسو ترکیب شده با شیر بخارپز, شکلات شیرین و روی آن با خامه فرم گرفته تزئین شده است.",
+                    category: "نوشیدنی ویژه",
+                    image: ""
+                },
+                {
+                    name: "ICED COFFEE",
+                    price: "۳۵,۰۰۰",
+                    description: "قهوه سیاه سرد شده که با یخ سرو می شود.",
+                    category: "قهوه سرد",
+                    image: ""
+                },
+                {
+                    name: "COLD BREW",
+                    price: "۵۵,۰۰۰",
+                    description: "قهوه ای که با آب سرد در یک دوره زمانی طولانی دم می شود و نتیجه آن طعمی نرم و کمتر اسیدی است.",
+                    category: "قهوه سرد",
+                    image: ""
+                },
+                {
+                    name: "ESPRESSO TONIC",
+                    price: "۴۸,۰۰۰",
+                    description: "یک شات اسپرسو که با تونیک و یخ برای یک نوشیدنی طراوت بخش سرو می شود.",
+                    category: "نوشیدنی ویژه",
+                    image: ""
+                },
+                {
+                    name: "ICED CHAI LATTE",
+                    price: "۵۲,۰۰۰",
+                    description: "چای ادویه دار مخلوط شده با شیر سرد و شربت چای.",
+                    category: "نوشیدنی ویژه",
+                    image: ""
+                },
+                {
+                    name: "COLD CHOCOLATE",
+                    price: "۴۰,۰۰۰",
+                    description: "شکلات داغ سرد شده با یک قاشق خامه فرم گرفته.",
+                    category: "نوشیدنی ویژه",
+                    image: ""
+                },
+                {
+                    name: "COLD BREW FLOAT",
+                    price: "۶۵,۰۰0",
+                    description: "کولد برو که با بستنی وانیلی سرو می شود.",
+                    category: "نوشیدنی ویژه",
+                    image: ""
+                }
+            ];
+        }
+    </script>
 </body>
 </html>
